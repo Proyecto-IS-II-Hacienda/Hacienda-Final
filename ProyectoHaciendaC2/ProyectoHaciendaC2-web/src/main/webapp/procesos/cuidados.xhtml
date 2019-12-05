@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+
+    <h:body>
+        <h:form id="form1">
+
+            <p:messages showDetail="true" showSummary="true">
+                <p:autoUpdate/>
+            </p:messages>
+
+            <h:panelGrid id="panelCentral">
+                <p:panel header="Listado de asignaciones" rendered="#{cuidadoMB.cuidadoanimal==null and cuidadoMB.cuidadoplanta==null}">
+                    <p:outputLabel for="selEstado" value="Se asignará: "></p:outputLabel> 
+                    <p:selectOneRadio id="selEstado" value="#{cuidadoMB.seleccion}" required="true">
+                        <f:selectItem itemLabel="Animal" itemValue="true"></f:selectItem>
+                        <f:selectItem itemLabel="Planta" itemValue="false"></f:selectItem>
+                    </p:selectOneRadio>
+                    <p:message for="selEstado" ></p:message>
+                    <p:commandButton value="Nuevo" icon="ui-icon-plus" action="#{cuidadoMB.nuevo()}" update="form1"></p:commandButton>
+
+
+
+                    <p:dataTable id="dtAreas" value="#{cuidadoMB.distribucionesAnimalesList}" var="asig" paginator="true" rows="10">
+                        <p:column headerText="Animal" style="width: auto;" sortBy="#{asig.animal.animalPK.idanimal}" filterBy="#{asig.animal.animalPK.idanimal}" filterMatchMode="contains">
+                            <h:outputLabel value="#{asig.animal.animalPK.idanimal}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Insumo" style="width: auto;" sortBy="#{asig.idsalidainsumo.idcomprainsumo.codinsumo.nombre}" filterBy="#{asig.idsalidainsumo.idcomprainsumo.codinsumo.nombre}" filterMatchMode="contains">
+                            <h:outputLabel value="#{asig.idsalidainsumo.idcomprainsumo.codinsumo.nombre}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Dicificacion" style="width: auto;" sortBy="#{asig.docificacion}" filterBy="#{asig.docificacion}" filterMatchMode="contains">
+                            <h:outputLabel value="#{asig.docificacion}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Eliminar">
+                            <p:commandButton icon="ui-icon-trash" action="#{cuidadoMB.eliminar(asig)}" update="form1">
+                                <p:confirm header="Confirmacion" message="Desea eliminar la asignacion seleccionada ?"></p:confirm>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Editar">
+                            <p:commandButton icon="ui-icon-pencil" action="#{cuidadoMB.seleccionar(asig)}" update="form1"></p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+
+
+
+                    <p:dataTable id="dtAreasPlanta" value="#{cuidadoMB.distribucionesPlantasList}" var="asig" paginator="true" rows="10">
+
+
+                        <p:column headerText="Planta" style="width: auto;" sortBy="#{asig.planta.plantaPK.idplanta}" filterBy="#{asig.planta.plantaPK.idplanta}" filterMatchMode="contains">
+                            <h:outputLabel value="#{asig.planta.plantaPK.idplanta}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Insumo" style="width: auto;" sortBy="#{asig.idsalidainsumo.idcomprainsumo.codinsumo.nombre}" filterBy="#{asig.idsalidainsumo.idcomprainsumo.codinsumo.nombre}" filterMatchMode="contains">
+                            <h:outputLabel value="#{asig.idsalidainsumo.idcomprainsumo.codinsumo.nombre}" ></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Docificacion" style="width: auto;" sortBy="#{asig.docificacion}" filterBy="#{asig.docificacion}" filterMatchMode="contains">
+                            <h:outputLabel value="#{asig.docificacion}"></h:outputLabel>
+                        </p:column>
+                        <p:column headerText="Eliminar">
+                            <p:commandButton icon="ui-icon-trash" action="#{cuidadoMB.eliminar(asig)}" update="form1">
+                                <p:confirm header="Alerta" message="desea eliminar la asignacion seleccionada?"></p:confirm>
+                            </p:commandButton>
+                        </p:column>
+                        <p:column headerText="Editar">
+                            <p:commandButton icon="ui-icon-pencil" action="#{cuidadoMB.seleccionar(asig)}" update="form1"></p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+
+
+
+                <p:panel header="#{cuidadoMB.esNuevo? 'Ingreso': 'Edicion'} de asignación" rendered="#{cuidadoMB.cuidadoanimal!=null}">
+                    <h:panelGrid columns="3">
+                        <p:outputLabel  for="calAs" value="Insumo: "></p:outputLabel>
+                        <p:selectOneMenu id="calAs" value="#{cuidadoMB.cuidadoanimal.idsalidainsumo}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItems value="#{cuidadoMB.salidaInsumosList}" var="ins" itemLabel="#{ins.idcomprainsumo.codinsumo.nombre}" itemValue="#{ins}"></f:selectItems>
+                        </p:selectOneMenu>
+                        <p:message for="calAs"></p:message>
+
+                        <p:outputLabel for="txtDescripcion" value="Dosificiación: "></p:outputLabel>
+                        <p:inputText id="txtDescripcion" value="#{cuidadoMB.cuidadoanimal.docificacion}" required="true" requiredMessage="Campo obligatorio"></p:inputText>
+                        <p:message for="txtDescripcion"></p:message>
+
+
+
+                        <h:panelGrid id="panelAnimal" columns="2">
+                            <p:outputLabel value="Animal"></p:outputLabel>
+                            <p:commandButton icon="ui-icon-circle-triangle-w" action="#{cuidadoMB.abrirBusquedaAnimal()}" immediate="true">
+                                <p:ajax event="dialogReturn" listener="#{cuidadoMB.recibirDialogo}" update="panelAnimal"></p:ajax>
+                            </p:commandButton>                            
+                            <p:outputLabel value="ID"></p:outputLabel>
+                            <p:outputLabel value="#{cuidadoMB.cuidadoanimal.animal.animalPK.idanimal}"></p:outputLabel>
+                            <p:outputLabel value="Nombre común"></p:outputLabel>
+                            <p:outputLabel value="#{cuidadoMB.cuidadoanimal.animal.tipodeanimal.tipodeanimalPK.nombrecomun}"></p:outputLabel>
+                        </h:panelGrid>
+
+
+
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Grabar" action="#{cuidadoMB.grabar()}" update="form1" ></p:commandButton>
+                        <p:commandButton value="Cancelar" action="#{cuidadoMB.cancelar()}" update="form1" immediate="true"></p:commandButton>
+                    </h:panelGrid>
+                </p:panel>
+
+
+                <p:panel header="#{cuidadoMB.esNuevo? 'Ingreso': 'Edicion'} de asignación" rendered="#{cuidadoMB.cuidadoplanta!=null}">
+                    <h:panelGrid columns="3">
+                        <p:outputLabel for="calAsig" value="Insumo: "></p:outputLabel>
+                        <p:selectOneMenu id="calAsig" value="#{cuidadoMB.cuidadoplanta.idsalidainsumo}" converter="omnifaces.SelectItemsConverter">
+                            <f:selectItems value="#{cuidadoMB.salidaInsumosList}" var="ins" itemLabel="#{ins.idcomprainsumo.codinsumo.nombre}" itemValue="#{ins}"></f:selectItems>
+                        </p:selectOneMenu>
+                        <p:message for="calAsig"></p:message>
+
+                        <p:outputLabel for="txtDescripcionP" value="Dosificiación: "></p:outputLabel>
+                        <p:inputText id="txtDescripcionP" value="#{cuidadoMB.cuidadoplanta.docificacion}" required="true" requiredMessage="Campo obligatorio"></p:inputText>
+                        <p:message for="txtDescripcionP"></p:message>
+
+
+
+                        <h:panelGrid id="panelPlanta" columns="2">
+                            <p:outputLabel value="Planta"></p:outputLabel>
+                            <p:commandButton icon="ui-icon-circle-triangle-w" action="#{cuidadoMB.abrirBusquedaPlanta()}" immediate="true">
+                                <p:ajax event="dialogReturn" listener="#{cuidadoMB.recibirDialogo}" update="panelPlanta"></p:ajax>
+                            </p:commandButton>                            
+                            <p:outputLabel value="ID"></p:outputLabel>
+                            <p:outputLabel value="#{cuidadoMB.cuidadoplanta.planta.plantaPK.idplanta}"></p:outputLabel>
+                            <p:outputLabel value="Nombre común"></p:outputLabel>
+                            <p:outputLabel value="#{cuidadoMB.cuidadoplanta.planta.tipoplanta.tipoplantaPK.nombrecomun}"></p:outputLabel>
+                        </h:panelGrid>
+
+
+
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Grabar" action="#{cuidadoMB.grabar()}" update="form1" ></p:commandButton>
+                        <p:commandButton value="Cancelar" action="#{cuidadoMB.cancelar()}" update="form1" immediate="true"></p:commandButton>
+                    </h:panelGrid>
+                </p:panel>
+
+            </h:panelGrid>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+            </p:confirmDialog>  
+        </h:form>
+    </h:body>
+</html>

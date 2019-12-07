@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package grupo6.DP.managed_beans;
 
 import grupo6.utilitarios.Permiso;
@@ -95,7 +90,7 @@ public class indexManagedBean implements Serializable {
         return "/index.xhtml?redirect-faces = true";
     }
 
-    
+
     public void lanzarVentana() {
         Map<String, Object> opciones = new HashMap<>();
         opciones.put("modal", true);
@@ -112,16 +107,14 @@ public class indexManagedBean implements Serializable {
     public void cargarUsuarios() {
         ServletContext context = getContext();
         try {
-            HashMap<String, Permiso> permisos = new HashMap<>();
+            Map<String, Permiso> permisos = new HashMap<>();
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder documentBuilder = dbf.newDocumentBuilder();
             Document document = documentBuilder.parse(context.getResourceAsStream("/WEB-INF/usuarios.xml"));
             document.getDocumentElement().normalize();
             NodeList listaAuxiliar;
-            //System.out.println("Elemento raiz:" + document.getDocumentElement().getNodeName());
             listaAuxiliar = document.getElementsByTagName("AdmHacienda");
             Node nodo = listaAuxiliar.item(0);
-            System.out.println("Elemento:" + nodo.getNodeName());
             if (nodo.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) nodo;
                 permisos.put("AH", new Permiso(Boolean.getBoolean(element.getElementsByTagName("ingreso").item(0).getTextContent()),
@@ -132,7 +125,6 @@ public class indexManagedBean implements Serializable {
 
             listaAuxiliar = document.getElementsByTagName("AdmCampo");
             nodo = listaAuxiliar.item(0);
-            System.out.println("Elemento:" + nodo.getNodeName());
             if (nodo.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) nodo;
                 permisos.put("AC", new Permiso(Boolean.getBoolean(element.getElementsByTagName("ingreso").item(0).getTextContent()),
@@ -143,7 +135,6 @@ public class indexManagedBean implements Serializable {
 
             listaAuxiliar = document.getElementsByTagName("AdmSistema");
             nodo = listaAuxiliar.item(0);
-            System.out.println("Elemento:" + nodo.getNodeName());
             if (nodo.getNodeType() == Node.ELEMENT_NODE) {
                 Element element = (Element) nodo;
                 permisos.put("AS", new Permiso(Boolean.getBoolean(element.getElementsByTagName("ingreso").item(0).getTextContent()),

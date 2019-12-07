@@ -203,8 +203,8 @@ public class CuidadosManagedBean implements Serializable {
     public void grabar() {
         if (esNuevo) {
             if (cuidadoanimal != null) {
-                
-                
+
+
                 cuidadoanimal.setIdcuidado (cuidadoanimalFacadeLocal.findAll().isEmpty()? 0 :  cuidadoanimalFacadeLocal.findAll().get(cuidadoanimalFacadeLocal.findAll().size() - 1).getIdcuidado() + 1);
                 cuidadoanimalFacadeLocal.create(cuidadoanimal);
             } else if (cuidadoplanta != null) {
@@ -259,11 +259,6 @@ public class CuidadosManagedBean implements Serializable {
         PrimeFaces.current().dialog().openDynamic("seleccion_animal", opciones, null);
     }
 
-    public void recibirAnimales(SelectEvent e) {
-        //distribucionAnimal.setAnimal((Animal) e.getObject());
-
-    }
-
     public void abrirBusquedaPlanta() {
 
         Map<String, Object> opciones = new HashMap<>();
@@ -272,10 +267,6 @@ public class CuidadosManagedBean implements Serializable {
         opciones.put("contentHeigth", 500);
 
         PrimeFaces.current().dialog().openDynamic("seleccion_planta", opciones, null);
-    }
-
-    public void recibirPlanta(SelectEvent e) {
-        //distribucionPlanta.setPlanta((Planta) e.getObject());
     }
 
     public void seleccionar(Object c) {

@@ -59,12 +59,12 @@ public class inventarioManagedBean implements Serializable {
         listaInsumos = insumosFacadeLocal.findAll();
         listaInventarioInsumos = inventarioInsumosFacadeLocal.findAll();
         listaInventarioProductos = inventarioProductosFacadeLocal.findAll();
-        listaInventarioInsumos.forEach((ii) -> {
-            ii.setInsumos(insumosFacadeLocal.find(ii.getInventarioInsumosPK().getCodinsumo()));
-        });
-        listaInventarioProductos.forEach((ip) -> {
-            ip.setProductos(productosFacadeLocal.find(ip.getInventarioProductosPK().getIdproducto()));
-        });
+        listaInventarioInsumos.forEach(ii ->
+            ii.setInsumos(insumosFacadeLocal.find(ii.getInventarioInsumosPK().getCodinsumo()))
+        );
+        listaInventarioProductos.forEach(ip ->
+            ip.setProductos(productosFacadeLocal.find(ip.getInventarioProductosPK().getIdproducto()))
+        );
         inventarioInsumos = null;
         inventarioProductos = null;
         flag = false;
@@ -80,6 +80,7 @@ public class inventarioManagedBean implements Serializable {
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Entrada guardada exitosamente!"));
         } catch (Exception e) {
+            LOGGER.info(e);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error: ", "No hemos podido guardar la entrada."));
         } finally {
             inventarioInsumos = null;
@@ -99,6 +100,7 @@ public class inventarioManagedBean implements Serializable {
             }
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Entrada guardada exitosamente!"));
         } catch (Exception e) {
+            LOGGER.info(e);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error: ", "No hemos podido guardar la entrada."));
         } finally {
             inventarioProductos = null;
@@ -131,7 +133,7 @@ public class inventarioManagedBean implements Serializable {
         } else if (in instanceof InventarioProductos) {
             this.inventarioProductos = (InventarioProductos) in;
         }
-        
+
         flag = false;
     }
 
@@ -143,7 +145,7 @@ public class inventarioManagedBean implements Serializable {
             inventarioProductosFacadeLocal.remove(new InventarioProductos(((InventarioProductos) in).getInventarioProductosPK().getIdinventarioproductos(),((InventarioProductos) in).getProductos().getIdproducto()));
                inventarioProductos = null;
         }
-        init(); 
+        init();
         flag = false;
     }
 

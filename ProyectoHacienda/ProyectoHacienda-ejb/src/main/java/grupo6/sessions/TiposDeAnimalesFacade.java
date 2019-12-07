@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+
 /**
  *
  * @author Marcelo_Echeverria
@@ -32,6 +33,7 @@ public class TiposDeAnimalesFacade extends AbstractFacade<TiposDeAnimales> imple
 
     @Override
     public void eliminar() {
+      //No existe codigo en esta seccion
       
     }
     

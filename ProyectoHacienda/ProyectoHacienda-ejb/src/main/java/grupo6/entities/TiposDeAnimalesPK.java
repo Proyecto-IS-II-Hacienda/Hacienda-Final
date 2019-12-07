@@ -69,13 +69,7 @@ public class TiposDeAnimalesPK implements Serializable {
             return false;
         }
         TiposDeAnimalesPK other = (TiposDeAnimalesPK) object;
-        if ((this.raza == null && other.raza != null) || (this.raza != null && !this.raza.equals(other.raza))) {
-            return false;
-        }
-        if ((this.nombre == null && other.nombre != null) || (this.nombre != null && !this.nombre.equals(other.nombre))) {
-            return false;
-        }
-        return true;
+        return !((this.raza == null && other.raza != null) || (this.raza != null && !this.raza.equals(other.raza))||(this.nombre == null && other.nombre != null) || (this.nombre != null && !this.nombre.equals(other.nombre)));
     }
 
     @Override

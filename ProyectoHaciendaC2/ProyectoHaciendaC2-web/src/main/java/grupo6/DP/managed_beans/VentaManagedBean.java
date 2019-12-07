@@ -118,6 +118,7 @@ public class VentaManagedBean implements Serializable {
     }
 
     private void equilibrarInventario() {
+        throw new UnsupportedOperationException();
     }
 
     public void productoListener(ValueChangeEvent e) {
@@ -135,7 +136,7 @@ public class VentaManagedBean implements Serializable {
 
 
     public void vender() {
-        productosPreVenta.stream().filter((sp) -> (sp.getCantidad() > 0)).map((sp) -> {
+        productosPreVenta.stream().filter(sp -> sp.getCantidad() > 0 ).map( sp -> {
             salidaproductoFacadeLocal.create(sp);
             return sp;
         }).map((sp) -> {
@@ -156,7 +157,7 @@ public class VentaManagedBean implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
-    public void onRowCancel(RowEditEvent event) {
+    public void onRowCancel() {
         FacesMessage msg = new FacesMessage("Edit Cancelled");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }

@@ -27,7 +27,6 @@ public class PlantasManagedBean implements Serializable {
     private PlantaFacadeLocal plantaFacadeLocal;
     private List <Planta> plantasList;
     Planta plantasAsignar;
-    private List <Planta> temp;
     private boolean seleccionado;
 
     /**
@@ -40,7 +39,6 @@ public class PlantasManagedBean implements Serializable {
     public void init(){
         seleccionado=false;
         plantasList=plantaFacadeLocal.findAll();
-        temp=new ArrayList();
         plantasAsignar=new Planta();
     }
 

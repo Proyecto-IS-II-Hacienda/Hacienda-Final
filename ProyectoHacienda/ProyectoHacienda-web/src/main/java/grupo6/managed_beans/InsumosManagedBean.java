@@ -53,7 +53,7 @@ public class InsumosManagedBean implements Serializable{
             }else{
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "error", "ocurrio un error al gravar el insumo"));
             }
-            
+            throw new RuntimeException(e);
         }
 
     }

@@ -104,9 +104,9 @@ public class VentaManagedBean implements Serializable {
             SalidaProducto sp = new SalidaProducto();
             sp.setProcesamientoAnimal(p);
             return sp;
-        }).forEachOrdered((sp) -> {
-            productosPreVenta.add(sp);
-        });
+        }).forEachOrdered((sp) ->
+            productosPreVenta.add(sp)
+        );
     }
 
     public List<Cliente> getClientes() {
@@ -144,9 +144,9 @@ public class VentaManagedBean implements Serializable {
         }).map((sp) -> {
             procesamientoanimalFacadeLocal.edit(sp.getProcesamientoAnimal());
             return sp;
-        }).forEachOrdered((sp) -> {
-            ventaFacadeLocal.create(new Venta(new VentaPK(numFactura,BigInteger.valueOf(sp.getIdsalidaproducto()), cliente.getCedula())));
-        });
+        }).forEachOrdered((sp) ->
+            ventaFacadeLocal.create(new Venta(new VentaPK(numFactura,BigInteger.valueOf(sp.getIdsalidaproducto()), cliente.getCedula())))
+        );
 
     }
 
@@ -182,7 +182,7 @@ public class VentaManagedBean implements Serializable {
             salidaProducto.setProcesamientoAnimal(productos.get(0));
             productosPreVenta.add(salidaProducto);
         } catch (Exception e) {
-            LOGGER.info(e.getMessage());
+            LOGGER.info(e);
         }
     }
 

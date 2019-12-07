@@ -59,12 +59,12 @@ public class inventarioManagedBean implements Serializable {
         listaInsumos = insumosFacadeLocal.findAll();
         listaInventarioInsumos = inventarioInsumosFacadeLocal.findAll();
         listaInventarioProductos = inventarioProductosFacadeLocal.findAll();
-        listaInventarioInsumos.forEach(ii -> {
-            ii.setInsumos(insumosFacadeLocal.find(ii.getInventarioInsumosPK().getCodinsumo()));
-        });
-        listaInventarioProductos.forEach(ip -> {
-            ip.setProductos(productosFacadeLocal.find(ip.getInventarioProductosPK().getIdproducto()));
-        });
+        listaInventarioInsumos.forEach(ii ->
+            ii.setInsumos(insumosFacadeLocal.find(ii.getInventarioInsumosPK().getCodinsumo()))
+        );
+        listaInventarioProductos.forEach(ip ->
+            ip.setProductos(productosFacadeLocal.find(ip.getInventarioProductosPK().getIdproducto()))
+        );
         inventarioInsumos = null;
         inventarioProductos = null;
         flag = false;

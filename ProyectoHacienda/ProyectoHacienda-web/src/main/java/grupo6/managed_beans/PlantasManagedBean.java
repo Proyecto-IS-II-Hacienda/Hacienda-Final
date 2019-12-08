@@ -60,6 +60,7 @@ public class PlantasManagedBean implements Serializable, Crud<Plantas> {
             notificarExito("Se han guardado los datos con éxito");
         } catch (Exception e) {
             notificarError("Ha ocurrido un error al guardar los datos");
+            throw new RuntimeException(e);
         }
     }
 

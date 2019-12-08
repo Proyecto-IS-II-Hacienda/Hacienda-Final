@@ -1,6 +1,8 @@
 
 package grupo6.managed_beans;
 
+
+
 import grupo6.entities.Clientes;
 import grupo6.sessions.ClientesFacadeLocal;
 import java.util.List;
@@ -12,6 +14,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import grupo6.utilitarios.Crud;
+import java.util.function.Supplier;
+
 
 /**
  *
@@ -19,7 +24,7 @@ import javax.faces.view.ViewScoped;
  */
 @Named(value = "clienteManagedBean")
 @ViewScoped
-public class ClienteManagedBean implements Serializable{
+public class ClienteManagedBean implements Serializable, Crud<Clientes>{
 
     
     private Clientes clientes;
@@ -32,11 +37,14 @@ public class ClienteManagedBean implements Serializable{
     public ClienteManagedBean() {
     }
     
+    @Override
      @PostConstruct
     public void init() {
         clientesList =  clientesFacadeLocal.findAll();
     }
     
+    
+    @Override
     public void grabar() {
 
         try {
@@ -49,12 +57,9 @@ public class ClienteManagedBean implements Serializable{
             init();
             clientes = null;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "informacion", "el cliente sea gravado exitosamente"));
-        } catch (Exception e) {
-             if (e.getCause().getCause().getCause().getCause() instanceof SQLIntegrityConstraintViolationException){
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "error", "La cédula ya existe"));
-            }else{
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "error", "ocurrio un error al gravar el cliente"));
-            }
+        } catch (Exception e) { 
+             notificarError("Ha ocurrido un error al guardar los datos");
+            throw new RuntimeException(e);
         }
     }
 
@@ -82,12 +87,14 @@ public class ClienteManagedBean implements Serializable{
         this.edicion = edicion;
     }
     
+    @Override
     public void nuevo() {
         edicion = false;
         clientes = new Clientes();
 
     }
 
+    @Override
     public void cancelar() {
         clientes = null;
     }
@@ -97,9 +104,15 @@ public class ClienteManagedBean implements Serializable{
         this.clientes = clientes;
     }
 
+    @Override
     public void eliminar(Clientes clientes) {
         clientesFacadeLocal.remove(clientes);
         init();
+    }
+
+    @Override
+    public void seleccionar(Clientes clase) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

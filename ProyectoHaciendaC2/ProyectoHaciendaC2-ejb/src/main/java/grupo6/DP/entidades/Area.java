@@ -48,7 +48,7 @@ public class Area implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "AREA")
-    private double area;
+    private double valorArea;
     @Basic(optional = false)
     @NotNull
     @Column(name = "CERCADO")
@@ -83,7 +83,7 @@ public class Area implements Serializable {
 
     public Area(AreaPK areaPK, double area, BigInteger cercado, String tiposuelo, BigInteger agua, BigInteger disponible) {
         this.areaPK = areaPK;
-        this.area = area;
+        this.valorArea = area;
         this.cercado = cercado;
         this.tiposuelo = tiposuelo;
         this.agua = agua;
@@ -102,12 +102,12 @@ public class Area implements Serializable {
         this.areaPK = areaPK;
     }
 
-    public double getArea() {
-        return area;
+    public double getValorArea() {
+        return valorArea;
     }
 
-    public void setArea(double area) {
-        this.area = area;
+    public void setValorArea(double valorArea) {
+        this.valorArea = valorArea;
     }
 
     public BigInteger getCercado() {

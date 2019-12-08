@@ -5,15 +5,18 @@
  */
 package grupo6.managed_beans;
 
+
 import grupo6.entities.Areas;
 import grupo6.sessions.AreasFacadeLocal;
 import grupo6.utilitarios.Crud;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import java.util.logging.Logger;
 
 
 /**
@@ -69,7 +72,20 @@ public class AreasManagedBean implements Serializable, Crud <Areas>{
      @Override
     public void grabar() {   
         try {
-            if (esNuevo) {
+            procesoGrabar();
+            notificarExito("El área ha sido guardada exitosamente");
+        } catch (Exception e) {
+            notificarError("Ocurrio un error al grabar el área");
+            Logger.getLogger(AreasManagedBean.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            area = null;
+            esNuevo = false;
+            init();
+        }
+    }
+    
+    public void procesoGrabar(){
+        if (esNuevo) {
                 area.setIdarea(area.getIdarea().toUpperCase());
                 for (int i = 0; i < area.getIdarea().length(); i++) {
                     if (area.getIdarea().length() == 10) {
@@ -84,14 +100,6 @@ public class AreasManagedBean implements Serializable, Crud <Areas>{
             }
             init();
             area = null;
-            notificarExito("El área ha sido guardada exitosamente");
-        } catch (Exception e) {
-            notificarError("Ocurrio un error al grabar el área");
-        } finally {
-            area = null;
-            esNuevo = false;
-            init();
-        }
     }
             
 
@@ -112,6 +120,7 @@ public class AreasManagedBean implements Serializable, Crud <Areas>{
             notificarExito("El area ha sido eliminada exitosamente");
         }catch(Exception e){
             notificarError("Ocurrio un error al eliminar el area");
+            Logger.getLogger(AreasManagedBean.class.getName()).log(Level.SEVERE, null, e);
 
         }
     }

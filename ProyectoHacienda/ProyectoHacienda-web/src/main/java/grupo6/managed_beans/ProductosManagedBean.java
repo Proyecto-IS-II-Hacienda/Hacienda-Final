@@ -11,10 +11,12 @@ import grupo6.entities.Productos;
 import grupo6.sessions.ProductosFacadeLocal;
 import grupo6.utilitarios.Crud;
 import java.util.List;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import java.util.logging.Logger;
 
 /**
  *
@@ -69,7 +71,18 @@ public class ProductosManagedBean implements Serializable, Crud<Productos> {
     @Override
     public void grabar() {
         try{
-            if (esNuevo) {
+            procesoGrabar();
+            notificarExito("El producto ha sido guardado exitosamente");
+
+        }catch(Exception e){
+            notificarError("Ocurrio un error al grabar el producto");
+            Logger.getLogger(ProductosManagedBean.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+    }
+    
+    public void procesoGrabar(){
+         if (esNuevo) {
                 producto.setIdproducto(producto.getIdproducto().toUpperCase());
                 for (int i = 0; i < producto.getIdproducto().length(); i++) {
                     if (producto.getIdproducto().length() == 10) {
@@ -84,12 +97,6 @@ public class ProductosManagedBean implements Serializable, Crud<Productos> {
             }
             init();
             producto=null;
-            notificarExito("El producto ha sido guardado exitosamente");
-
-        }catch(Exception e){
-            notificarError("Ocurrio un error al grabar el producto");
-        }
-        
     }
 
     @Override
@@ -112,6 +119,7 @@ public class ProductosManagedBean implements Serializable, Crud<Productos> {
             notificarExito("El producto ha sido eliminado exitosamente");
         }catch(Exception e){
             notificarError("Ocurrio un error al eliminar el producto");
+            Logger.getLogger(ProductosManagedBean.class.getName()).log(Level.SEVERE, null, e);
 
         }finally {
             producto = null;

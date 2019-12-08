@@ -58,10 +58,9 @@ public class AnimalesManagedBean implements Serializable {
     public void grabar() {
         try {
             if (flag) {
-                for (int i = 0; i < animal.getCodanimal().length(); i++) {
-                if(animal.getCodanimal().length()==10) break;
-                else animal.setCodanimal(animal.getCodanimal()+"0"); 
-            }
+                for (int i = 0; i < animal.getCodanimal().length() && animal.getCodanimal().length()<10; i++) 
+                    animal.setCodanimal(animal.getCodanimal()+"0"); 
+            
                 AFacadeLocal.create(animal);
             } else {
                 AFacadeLocal.edit(animal);
@@ -69,6 +68,9 @@ public class AnimalesManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Animal guardado exitosamente!"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error: ", "No hemos podido guardar el Animal."));
+            Logger logger = Logger.getLogger(PlantasManagedBean.class.getName());
+            logger.log(Level.WARNING,e.getMessage());
+            throw e;
         } finally {
             animal = null;
             flag = false;

@@ -69,13 +69,7 @@ public class TipodeanimalPK implements Serializable {
             return false;
         }
         TipodeanimalPK other = (TipodeanimalPK) object;
-        if ((this.nombrecientifico == null && other.nombrecientifico != null) || (this.nombrecientifico != null && !this.nombrecientifico.equals(other.nombrecientifico))) {
-            return false;
-        }
-        if ((this.nombrecomun == null && other.nombrecomun != null) || (this.nombrecomun != null && !this.nombrecomun.equals(other.nombrecomun))) {
-            return false;
-        }
-        return true;
+        return  !((this.nombrecientifico == null && other.nombrecientifico != null) || (this.nombrecientifico != null && !this.nombrecientifico.equals(other.nombrecientifico))||(this.nombrecomun == null && other.nombrecomun != null) || (this.nombrecomun != null && !this.nombrecomun.equals(other.nombrecomun)));
     }
 
     @Override

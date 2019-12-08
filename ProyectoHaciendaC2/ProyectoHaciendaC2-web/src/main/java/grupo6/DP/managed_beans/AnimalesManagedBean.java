@@ -8,7 +8,6 @@ package grupo6.DP.managed_beans;
 import grupo6.DP.entidades.Animal;
 import grupo6.MD.sesiones.AnimalFacadeLocal;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -27,7 +26,6 @@ public class AnimalesManagedBean implements Serializable {
     private AnimalFacadeLocal animalesFacadeLocal;
     private List <Animal> animalesList;
     private Animal animalesAsignar;
-    private List <Animal> temp;
     private boolean seleccionado;
     
 
@@ -41,7 +39,6 @@ public class AnimalesManagedBean implements Serializable {
     public void init(){
         seleccionado=false;
         animalesList=animalesFacadeLocal.findAll();
-        temp=new ArrayList();
         animalesAsignar=new Animal();
     }
 
@@ -65,8 +62,8 @@ public class AnimalesManagedBean implements Serializable {
     
      public void seleccionar(Animal animal){
 
-             animalesAsignar = animal;
-             agregar();
+        animalesAsignar = animal;
+        agregar();
 
         
     }

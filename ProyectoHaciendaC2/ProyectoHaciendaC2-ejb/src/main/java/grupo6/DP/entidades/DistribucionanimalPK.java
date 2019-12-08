@@ -99,19 +99,7 @@ public class DistribucionanimalPK implements Serializable {
             return false;
         }
         DistribucionanimalPK other = (DistribucionanimalPK) object;
-        if ((this.numeroarea == null && other.numeroarea != null) || (this.numeroarea != null && !this.numeroarea.equals(other.numeroarea))) {
-            return false;
-        }
-        if ((this.idtipoarea == null && other.idtipoarea != null) || (this.idtipoarea != null && !this.idtipoarea.equals(other.idtipoarea))) {
-            return false;
-        }
-        if ((this.idanimal == null && other.idanimal != null) || (this.idanimal != null && !this.idanimal.equals(other.idanimal))) {
-            return false;
-        }
-        if ((this.nombrecientifico == null && other.nombrecientifico != null) || (this.nombrecientifico != null && !this.nombrecientifico.equals(other.nombrecientifico))) {
-            return false;
-        }
-        return true;
+        return !((this.numeroarea == null && other.numeroarea != null) || (this.numeroarea != null && !this.numeroarea.equals(other.numeroarea))||(this.idtipoarea == null && other.idtipoarea != null) || (this.idtipoarea != null && !this.idtipoarea.equals(other.idtipoarea))||(this.idanimal == null && other.idanimal != null) || (this.idanimal != null && !this.idanimal.equals(other.idanimal))||(this.nombrecientifico == null && other.nombrecientifico != null) || (this.nombrecientifico != null && !this.nombrecientifico.equals(other.nombrecientifico)));
     }
 
     @Override

@@ -10,6 +10,8 @@ import grupo6.entities.TiposDeAnimalesPK;
 import grupo6.sessions.TiposDeAnimalesFacadeLocal;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -63,6 +65,9 @@ public class TiposDeAnimalesManagedBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Tipo de animal guardado exitosamente!"));
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, ":(", "No hemos podido guardar el tipo de Animal."));
+            Logger logger = Logger.getLogger(PlantasManagedBean.class.getName());
+            logger.log(Level.WARNING,e.getMessage());
+            throw e;
         } finally {
             tipoAnimal = null;
             init();
@@ -98,9 +103,9 @@ public class TiposDeAnimalesManagedBean implements Serializable {
     }
 
     public void eliminar(TiposDeAnimales tipoAnimal) {
-        System.out.println(tipoAnimal.toString());
         TAFacadeLocal.remove(tipoAnimal);
-        System.out.println(tipoAnimal.getTiposDeAnimalesPK().toString());
+        Logger logger = Logger.getLogger(PlantasManagedBean.class.getName());
+        logger.log(Level.WARNING,"Tipos de animales eliminados");
 
         init();
     }

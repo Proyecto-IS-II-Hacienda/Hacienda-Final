@@ -22,6 +22,8 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -216,7 +218,6 @@ public class AsignacionesManagedBean implements Serializable {
         areasList = null;
         areasList = areasFacadeLocal.findAll();
         esNuevo = true;
-        //NombreArea=areasFacadeLocal.find(this).getTipoarea().getNombrearea();
         distribucionAnimal = null;
         distribucionPlanta = null;
     }
@@ -258,7 +259,10 @@ public class AsignacionesManagedBean implements Serializable {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger logger = Logger.getLogger(PlantasManagedBean.class.getName());
+            logger.log(Level.WARNING,e.getMessage());
+            throw e;
+            
         } finally {
             init();
         }
@@ -269,7 +273,9 @@ public class AsignacionesManagedBean implements Serializable {
             distribucionesAnimalesFacadeLocal.remove(distribucion);
             init();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            Logger logger = Logger.getLogger(PlantasManagedBean.class.getName());
+            logger.log(Level.WARNING,e.getMessage());
+            throw e;
         }
     }
 

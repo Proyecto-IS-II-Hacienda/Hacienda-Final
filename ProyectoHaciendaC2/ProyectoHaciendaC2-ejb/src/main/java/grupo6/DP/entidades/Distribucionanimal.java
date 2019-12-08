@@ -177,29 +177,29 @@ public class Distribucionanimal implements Serializable {
     
     
             public boolean validarFechas()  {
-        boolean salir=false;
+            String salir=null;
         
         
             try {
                 
-                if (isMayorFechaHoy(this.fechaasignacion)
-                        || isMayorFechaHoy(this.fechasalida)) {
-                    salir = true;
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "No se guardó la asignación, se pueden hacer asignaciones solamente para fechas superiores o actuales "));
-                }
-                if (isMayor(this.fechaasignacion, this.fechasalida)) {
-                    salir = true;
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "No se guardó la asignación, la fecha de asignación debe ser menor a la de salida"));
-                }
+                if (isMayorFechaHoy(this.fechaasignacion) || isMayorFechaHoy(this.fechasalida)) 
+                    salir = "No se guardó la asignación, se pueden hacer asignaciones solamente para fechas superiores o actuales ";
+                
+                if (isMayor(this.fechaasignacion, this.fechasalida)) 
+                    salir = "No se guardó la asignación, la fecha de asignación debe ser menor a la de salida";
+                    
+                if(salir!=null)
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", salir));
+                
             } catch (Exception ex) {
                 Logger.getLogger(Distribucionanimal.class.getName()).log(Level.SEVERE, null, ex);
             }
         
         
-        return salir;
+        return salir!=null;
     }
         
-        public Boolean isMayorFechaHoy(Date fecha) throws Exception {
+        public Boolean isMayorFechaHoy(Date fecha) {
         Date hoy = new Date();
         Boolean resultado = false;
 
@@ -210,7 +210,7 @@ public class Distribucionanimal implements Serializable {
         return resultado;
     }
         
-        public Boolean isMayor(Date fechaInicial, Date fechaFinal) throws Exception {
+        public Boolean isMayor(Date fechaInicial, Date fechaFinal) {
         Boolean resultado = false;
             if (fechaInicial.after(fechaFinal) || fechaInicial.equals(fechaFinal)) 
             resultado=true;
